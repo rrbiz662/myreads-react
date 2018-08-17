@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import ListBooks from './ListBooks'
 import * as BooksAPI from './BooksAPI'
+import {Link, Route} from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -39,8 +40,8 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
+        <Route path="/search" render={() => (
+            <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
               <div className="search-books-input-wrapper">
@@ -53,30 +54,28 @@ class BooksApp extends React.Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author"/>
-
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid"></ol>
             </div>
           </div>
-        ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <ListBooks bookShelfName="Currently Reading" books={this.state.books} onMoveTo={this.moveBook}/>
-                <ListBooks bookShelfName="Want to Read" books={this.state.books} onMoveTo={this.moveBook}/>
-                <ListBooks bookShelfName="Read" books={this.state.books} onMoveTo={this.moveBook}/>
-              </div>
-            </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
-        )}
+        )}/>
+        <Route exact path="/" render={() => (
+                    <div className="list-books">
+                    <div className="list-books-title">
+                      <h1>MyReads</h1>
+                    </div>
+                    <div className="list-books-content">
+                      <div>
+                        <ListBooks bookShelfName="Currently Reading" books={this.state.books} onMoveTo={this.moveBook}/>
+                        <ListBooks bookShelfName="Want to Read" books={this.state.books} onMoveTo={this.moveBook}/>
+                        <ListBooks bookShelfName="Read" books={this.state.books} onMoveTo={this.moveBook}/>
+                      </div>
+                    </div>
+                    <Link to="/search" className="open-search">Add a book</Link>
+                  </div>
+        )}/>
       </div>
     )
   }
