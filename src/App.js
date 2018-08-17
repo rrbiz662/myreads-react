@@ -6,13 +6,6 @@ import {Link, Route} from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
     books: []
   }
 
@@ -42,9 +35,9 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path="/search" render={() => (
             <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
+              <div className="search-books-bar">
+                <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+                <div className="search-books-input-wrapper">
                 {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
                   You can find these search terms here:
@@ -63,17 +56,17 @@ class BooksApp extends React.Component {
         )}/>
         <Route exact path="/" render={() => (
                     <div className="list-books">
-                    <div className="list-books-title">
-                      <h1>MyReads</h1>
-                    </div>
-                    <div className="list-books-content">
-                      <div>
-                        <ListBooks bookShelfName="Currently Reading" books={this.state.books} onMoveTo={this.moveBook}/>
-                        <ListBooks bookShelfName="Want to Read" books={this.state.books} onMoveTo={this.moveBook}/>
-                        <ListBooks bookShelfName="Read" books={this.state.books} onMoveTo={this.moveBook}/>
+                      <div className="list-books-title">
+                        <h1>MyReads</h1>
                       </div>
-                    </div>
-                    <Link to="/search" className="open-search">Add a book</Link>
+                      <div className="list-books-content">
+                        <div>
+                          <ListBooks bookShelfName="Currently Reading" books={this.state.books} onMoveTo={this.moveBook}/>
+                          <ListBooks bookShelfName="Want to Read" books={this.state.books} onMoveTo={this.moveBook}/>
+                          <ListBooks bookShelfName="Read" books={this.state.books} onMoveTo={this.moveBook}/>
+                        </div>
+                      </div>
+                      <Link to="/search" className="open-search"></Link>
                   </div>
         )}/>
       </div>
