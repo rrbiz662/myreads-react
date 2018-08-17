@@ -14,6 +14,7 @@ class ListBooks extends React.Component{
     static propTypes ={
         bookShelfName: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
+        onMoveTo: PropTypes.func.isRequired
     }
 
     /**
@@ -54,12 +55,12 @@ class ListBooks extends React.Component{
                             <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                                <select>
+                                <select onChange={(event) => this.props.onMoveTo(event.target, book)}>
                                     <option value="move" disabled>Move to...</option>
-                                    <option value="currentlyReading">Currently Reading</option>
-                                    <option value="wantToRead">Want to Read</option>
-                                    <option value="read">Read</option>
-                                    <option value="none">None</option>
+                                    <option value="currentlyReading" selected={currentShelf === CURR_READING_SHELF}>Currently Reading</option>
+                                    <option value="wantToRead" selected={currentShelf === WANT_READ_SHELF}>Want to Read</option>
+                                    <option value="read" selected={currentShelf === READ_SHELF}>Read</option>
+                                    <option value="none" selected={currentShelf === NO_SHELF}>None</option>
                                 </select>
                             </div>
                             </div>

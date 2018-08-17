@@ -1,5 +1,4 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks'
 import * as BooksAPI from './BooksAPI'
@@ -14,6 +13,21 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false,
     books: []
+  }
+
+  moveBook = (event, book) =>{
+    // Get shelf to move book to.
+    let newShelf = event.options[event.selectedIndex].value;
+
+    // Update DB and state w/ new location.
+    BooksAPI.update(book, newShelf).then(() =>{
+      // Get the book to update.
+      let bookToUpdate = this.state.books.find((b) => b.id === book.id);
+      bookToUpdate.shelf = newShelf;
+
+      // Force a re-render.
+      this.setState({books: this.state.books})
+    })
   }
 
   componentDidMount(){
@@ -53,9 +67,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <ListBooks bookShelfName="Currently Reading" books={this.state.books}/>
-                <ListBooks bookShelfName="Want to Read" books={this.state.books}/>
-                <ListBooks bookShelfName="Read" books={this.state.books}/>
+                <ListBooks bookShelfName="Currently Reading" books={this.state.books} onMoveTo={this.moveBook}/>
+                <ListBooks bookShelfName="Want to Read" books={this.state.books} onMoveTo={this.moveBook}/>
+                <ListBooks bookShelfName="Read" books={this.state.books} onMoveTo={this.moveBook}/>
               </div>
             </div>
             <div className="open-search">
