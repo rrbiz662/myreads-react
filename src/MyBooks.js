@@ -4,16 +4,13 @@ import PropTypes from 'prop-types'
 import ListBooks from './ListBooks'
 
 class MyBooks extends React.Component{
-    /**
-     * Declare property types.
-     */
     static propTypes ={
         books: PropTypes.array.isRequired,
         onMoveTo: PropTypes.func.isRequired
     }
 
     /**
-     * Builds and displays bookcase w/ book shelves.
+     * @description Renders book lists in corresponding book shelves.
      */
     render(){
         return(

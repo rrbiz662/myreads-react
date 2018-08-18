@@ -15,6 +15,10 @@ class BookSearch extends React.Component{
     matchingBooks: []
   }
 
+  /**
+   * @description Adds shelf property to matching elements in the passed in array.
+   * @param booksToShelf An array of books to add "shelf" property to.
+   */
   addShelf = (booksToShelf) => {
     //  Adding shelf property to elements since they do not come w/ it from the DB.
     this.props.books.forEach(element => {
@@ -26,6 +30,10 @@ class BookSearch extends React.Component{
 
   }
 
+  /**
+   * @description Searches for books matching the passed in query.
+   * @param event The event to get the query from.
+   */
   searchBooks = (event) => {
     let inputText = event.target.value;
 
@@ -52,31 +60,24 @@ class BookSearch extends React.Component{
     }
   }
 
+  /**
+   * Renders a search results book list.
+   */
   render(){
-    console.log(this.props.books.length);
-      this.addShelf(this.state.matchingBooks);
-      console.log(this.state.matchingBooks);
+    // Add shelf property before re-rendering.
+    this.addShelf(this.state.matchingBooks);
 
-
-      return(
-        <div className="search-books">
-          <div className="search-books-bar">
-            <Link to="/" className="close-search"></Link>
-            <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don"t worry if
-              you don"t find a specific author or title. Every search is limited by search terms.
-            */}
-            <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.searchBooks}/>
-          </div>
-          </div>
-            <ListBooks bookShelfName="Search Results" books={this.state.matchingBooks} onMoveTo={this.props.onMoveTo}/>
+    return(
+      <div className="search-books">
+        <div className="search-books-bar">
+          <Link to="/" className="close-search"></Link>
+          <div className="search-books-input-wrapper">
+          <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.searchBooks}/>
         </div>
-      );
+        </div>
+          <ListBooks bookShelfName="Search Results" books={this.state.matchingBooks} onMoveTo={this.props.onMoveTo}/>
+      </div>
+    );
   }
 }
 

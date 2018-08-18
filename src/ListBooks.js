@@ -8,9 +8,6 @@ const READ_SHELF = "read";
 const NO_SHELF = "none";
 
 class ListBooks extends React.Component{
-    /**
-     * Declare property types.
-     */
     static propTypes ={
         bookShelfName: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
@@ -18,7 +15,7 @@ class ListBooks extends React.Component{
     }
 
     /**
-     * Get the shelf to filter by.
+     * @description Gets the shelf to filter by.
      */
     getShelf = () => {
         let shelfName = this.props.bookShelfName;
@@ -35,13 +32,12 @@ class ListBooks extends React.Component{
     }
 
     /**
-     * Render book list based on passed in filtering argument.
+     * @deprecated Renders book list based on passed in filtering argument.
      */
     render(){
-        console.log("LISTBOOK");
         // Get the books in the current shelf.
-        let currentShelf = this.getShelf(this.props.bookShelfName);
         let currentBooks;
+        let currentShelf = this.getShelf(this.props.bookShelfName);
 
         if(currentShelf !== NO_SHELF)
             currentBooks = this.props.books.filter((book) => book.shelf === currentShelf);

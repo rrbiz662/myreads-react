@@ -11,7 +11,9 @@ class BooksApp extends React.Component {
   }
 
    /**
-   * Moves book from one shelf to another.
+   * @description Moves book from one shelf to another.
+   * @param event The event target.
+   * @param book The book to move.
    */
   moveBook = (event, book) =>{
     // Get shelf to move book to.
@@ -39,12 +41,18 @@ class BooksApp extends React.Component {
     }));
   }
 
+  /**
+   * @description Gets all books using BooksAPI.
+   */
   componentDidMount(){
     BooksAPI.getAll().then((books) =>{
       this.setState({books: books});
     })
   }
 
+  /**
+   * @description Renders search or mybooks page depending on URL.
+   */
   render() {
     return (
       <div className="app">
