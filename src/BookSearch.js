@@ -48,9 +48,13 @@ class BookSearch extends React.Component{
         this.addShelf(relevantBooks);
 
         this.setState({
-          query: inputText,
-          matchingBooks: relevantBooks})
+          matchingBooks: relevantBooks
+        });
       })
+
+      this.setState({
+        query: inputText
+      });
     }
     else{
       this.setState({
