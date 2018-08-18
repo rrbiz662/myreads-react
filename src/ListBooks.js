@@ -14,7 +14,6 @@ class ListBooks extends React.Component{
     static propTypes ={
         bookShelfName: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
-        onMoveTo: PropTypes.func.isRequired
     }
 
     /**
@@ -40,7 +39,12 @@ class ListBooks extends React.Component{
     render(){
         // Get the books in the current shelf.
         let currentShelf = this.getShelf(this.props.bookShelfName);
-        let currentBooks = this.props.books.filter((book) => book.shelf === currentShelf);
+        let currentBooks;
+
+        if(currentShelf !== NO_SHELF)
+            currentBooks = this.props.books.filter((book) => book.shelf === currentShelf);
+        else
+            currentBooks = this.props.books;
 
         currentBooks.sort(sortBy("title"));
 
@@ -53,9 +57,9 @@ class ListBooks extends React.Component{
                         <li key={book.id}>
                             <div className="book">
                                 <div className="book-top">
-                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail : ''})` }}></div>
                                 <div className="book-shelf-changer">
-                                    <select value={currentShelf} onChange={(event) => this.props.onMoveTo(event.target, book)}>
+                                    <select value={book.shelf} onChange={(event) => this.props.onMoveTo(event.target, book)}>
                                         <option value="move" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>
@@ -64,8 +68,8 @@ class ListBooks extends React.Component{
                                     </select>
                                 </div>
                                 </div>
-                                <div className="book-title">{book.title}</div>
-                                <div className="book-authors">{book.author}</div>
+                                <div className="book-title">{book.title ? book.title : "No Title"}</div>
+                                <div className="book-authors">{book.authors ? book.authors.join(", ") : "No Author"}</div>
                             </div>
                         </li>
                     ))}

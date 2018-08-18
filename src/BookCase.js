@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ListBooks from './ListBooks'
 import * as BooksAPI from './BooksAPI'
 
-class BookCase extends React.Component{
+class MyBooks extends React.Component{
     /**
      * Declare property types.
      */
@@ -50,4 +50,4 @@ class BookCase extends React.Component{
     }
 }
 
-export default BookCase
+export default MyBooks
