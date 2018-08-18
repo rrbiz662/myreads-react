@@ -72,10 +72,10 @@ class BookSearch extends React.Component{
         <div className="search-books-bar">
           <Link to="/" className="close-search"></Link>
           <div className="search-books-input-wrapper">
-          <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.searchBooks}/>
+            <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.searchBooks}/>
+          </div>
         </div>
-        </div>
-          <ListBooks bookShelfName="Search Results" books={this.state.matchingBooks} onMoveTo={this.props.onMoveTo}/>
+        <ListBooks bookShelfName="Search Results" books={this.state.matchingBooks} onMoveTo={this.props.onMoveTo}/>
       </div>
     );
   }
