@@ -6,7 +6,8 @@ import ListBooks from "./ListBooks";
 
 class BookSearch extends React.Component{
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onMoveTo: PropTypes.func.isRequired
   }
 
   state = {
@@ -14,17 +15,30 @@ class BookSearch extends React.Component{
     matchingBooks: []
   }
 
+  addShelf = (booksToShelf) => {
+    //  Adding shelf property to elements since they do not come w/ it from the DB.
+    this.props.books.forEach(element => {
+      let matchingElement = booksToShelf.find((b) => b.id === element.id);
+
+      if(matchingElement)
+        matchingElement["shelf"] = element.shelf;
+    });
+
+  }
+
   searchBooks = (event) => {
     let inputText = event.target.value;
 
     if(inputText !== ""){
-      BooksAPI.search(inputText).then((books) => {
-        let relevantBooks = books;
+      BooksAPI.search(inputText).then((matchingBooks) => {
+        let relevantBooks = matchingBooks;
 
         // Search returns error when no entry is found.
-        if(books.error)
+        if(matchingBooks.error)
           relevantBooks = [];
-        console.log(relevantBooks[0]);
+
+        this.addShelf(relevantBooks);
+
         this.setState({
           query: inputText,
           matchingBooks: relevantBooks})
@@ -39,6 +53,11 @@ class BookSearch extends React.Component{
   }
 
   render(){
+    console.log(this.props.books.length);
+      this.addShelf(this.state.matchingBooks);
+      console.log(this.state.matchingBooks);
+
+
       return(
         <div className="search-books">
           <div className="search-books-bar">
@@ -55,7 +74,7 @@ class BookSearch extends React.Component{
             <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.searchBooks}/>
           </div>
           </div>
-            <ListBooks bookShelfName="Search Results" books={this.state.matchingBooks}/>
+            <ListBooks bookShelfName="Search Results" books={this.state.matchingBooks} onMoveTo={this.props.onMoveTo}/>
         </div>
       );
   }

@@ -14,6 +14,7 @@ class ListBooks extends React.Component{
     static propTypes ={
         bookShelfName: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
+        onMoveTo: PropTypes.func.isRequired
     }
 
     /**
@@ -37,6 +38,7 @@ class ListBooks extends React.Component{
      * Render book list based on passed in filtering argument.
      */
     render(){
+        console.log("LISTBOOK");
         // Get the books in the current shelf.
         let currentShelf = this.getShelf(this.props.bookShelfName);
         let currentBooks;
@@ -59,7 +61,7 @@ class ListBooks extends React.Component{
                                 <div className="book-top">
                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail : ''})` }}></div>
                                 <div className="book-shelf-changer">
-                                    <select value={book.shelf} onChange={(event) => this.props.onMoveTo(event.target, book)}>
+                                    <select value={book.shelf ? book.shelf : "none"} onChange={(event) => this.props.onMoveTo(event.target, book)}>
                                         <option value="move" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>
