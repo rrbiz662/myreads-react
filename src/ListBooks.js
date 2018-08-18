@@ -32,7 +32,7 @@ class ListBooks extends React.Component{
     }
 
     /**
-     * @deprecated Renders book list based on passed in filtering argument.
+     * @description Renders book list based on passed in filtering argument.
      */
     render(){
         // Get the books in the current shelf.
